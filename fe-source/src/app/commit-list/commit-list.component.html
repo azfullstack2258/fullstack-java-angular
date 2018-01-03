@@ -1,0 +1,45 @@
+<div class="refresh-outer" (click)="refreshPage()">
+    <div class="refresh-middle">
+        <div class="refresh-inner">
+            <div class="refresh-content">
+                <i class="glyphicon glyphicon-star star"></i>
+                <span class="refresh-label">REFRESH</span>
+                <i class="glyphicon glyphicon-star star"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template [ngIf]="commitPage != null">
+    <hr/>
+
+    <div id="list" class="row">
+
+        <div class="table-responsive col-md-12">
+            <table class="table table-striped" cellspacing="0" cellpadding="0">
+                <tbody>
+
+                <tr *ngFor="let commits of commitPage.content | groupBy:'author'">
+                    <div *ngFor="let commit of commits.value" class="commit">
+                        <div>
+                            <img src="{{commit.authorAvatarUrl}}" class="avatar" />
+                        </div>
+                        <div class="info">
+                            <div><b>{{commit.commitMessage | slice:0:50}}</b></div>
+                            <div class="more-info">
+                                <div><b>{{commit.author}}</b> committed {{commit.commitDate | timeAgo}}</div>
+                                <div>commit: {{commit.sha}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div> <!-- /#list -->
+
+    <app-table-pagination [table]="self" [page]="commitPage"></app-table-pagination>
+
+</ng-template>
